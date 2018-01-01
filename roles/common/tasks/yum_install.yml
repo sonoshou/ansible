@@ -1,0 +1,8 @@
+- name: 共通項目をインストール。
+  yum: name="{{ item }}" state=latest
+  with_items:
+    - tree
+    - htop
+  become: yes
+  tags:
+    - yum

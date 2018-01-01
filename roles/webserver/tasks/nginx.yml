@@ -1,0 +1,12 @@
+- name: Nginxインストール
+  yum: name=nginx state=latest
+  tags:
+    - yum
+- name: Nginx起動
+  service: name=nginx state=started enabled=yes
+- name: Nginxの起動確認
+  shell: ps aux | grep nginx
+  register: ps_result
+  changed_when: false
+- debug: var=ps_result.stdout_lines
+  when: ps_result | success

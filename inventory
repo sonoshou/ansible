@@ -1,0 +1,2 @@
+# use on local only
+ansible_connection=local

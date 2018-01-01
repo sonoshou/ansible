@@ -1,0 +1,29 @@
+# 実行するプレイブックを指定。
+
+- name: サーバの共通項目を実行する
+  hosts: localhost
+  become: yes
+  connection: local
+  roles:
+    - common
+
+- name: システムユーザにrbenvをインストールする
+  hosts: localhost
+  vars_files:
+    - vars.yml
+  become: yes
+  become_user: "{{ production_system_user }}"
+  connection: local
+  roles:
+    - rbenv
+
+- name: システムユーザにrbenvをインストールする
+  hosts: localhost
+  vars_files:
+    - vars.yml
+  become: yes
+  become_user: "{{ staging_system_user }}"
+  connection: local
+  roles:
+    - rbenv
+

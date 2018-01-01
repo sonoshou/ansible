@@ -1,0 +1,5 @@
+- name: プロダクション用のシステムユーザをシステムアカウントに追加する
+  user: name="{{ production_system_user }}" system=yes
+
+- name: ステージング用のシステムユーザをシステムアカウントに追加する
+  user: name="{{ staging_system_user }}" system=yes

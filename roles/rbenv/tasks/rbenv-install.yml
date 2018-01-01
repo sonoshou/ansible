@@ -1,0 +1,62 @@
+- name: rubyのbuildに関係するミドルウェアをインストール
+  yum: name="{{ item }}" state=latest
+  with_items:
+    - gcc
+    - bzip2
+    - openssl-devel
+    - libyaml-devel
+    - readline-devel
+    - zlib-devel
+    - git
+  become_user: root
+  tags: 
+    - yum
+
+- name: git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+  git:
+    repo: 'https://github.com/sstephenson/rbenv.git'
+    dest: ~/.rbenv
+    version: master
+    update: yes
+  tags:
+    - git
+
+- name: git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+  git:
+    repo: 'https://github.com/sstephenson/ruby-build.git'
+    dest: ~/.rbenv/plugins/ruby-build
+    version: master
+    update: yes
+  tags:
+    - git
+
+- name: rbenvのパスが通っているかを確認
+  shell: cd; bash -lc "rbenv versions"
+  register: rbenv_installed
+  changed_when: False
+  check_mode: no
+  ignore_errors: yes
+
+- name: .bash_profileにパスを追加
+  lineinfile: >
+    dest="~/.bash_profile"
+    line='export PATH=$HOME/.rbenv/bin:$PATH'
+  when: ruby_version not in rbenv_installed.stdout
+
+- name: .bash_prifileにrbenv initを追加
+  lineinfile: >
+    dest="~/.bash_profile"
+    line='eval "$(rbenv init -)"'
+  when: ruby_version not in rbenv_installed.stdout
+
+# Tips
+# 0.shellなどの実行結果をregisterで記録する。
+#   ruby_versionは、vars/main.ymlに記載されている。
+#
+# 1.コマンド実行結果に特定文字列が入っていなければ処理する（入っている場合はskipする）
+# when: "'評価したい文字列' not in command1_result.stdout"
+# when: command1_result.stdout.find('評価したい文字列') == -1同様
+#
+# 2.コマンド実行結果に特定文字列が入っていなければ処理をfailedさせる（入っていない場合はskipする）
+# faild_when: "'評価したい文字列' not in command2_result.stdout"
+# faild_when: command2_result.stdout.find('評価したい文字列') == -1

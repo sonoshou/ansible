@@ -1,0 +1,21 @@
+- name: rubyのバージョンを確認する
+  shell: cd; bash -lc "rbenv versions"
+  register: rbenv_installed
+  check_mode: no
+  changed_when: False
+  ignore_errors: yes
+
+- name: rbenv install 
+  shell: cd; bash -lc "rbenv install '{{ ruby_version }}'"
+  when: ruby_version not in rbenv_installed.stdout
+
+- name: rubyのバージョンを確認する
+  shell: cd; bash -lc "ruby --version"
+  register: ruby_installed
+  check_mode: no
+  changed_when: False
+  ignore_errors: yes
+
+- name: rbenv rehash & rbenv global
+  shell: cd; bash -lc "rbenv rehash && rbenv global '{{ ruby_version }}'"
+  when: ruby_version not in ruby_installed.stdout
