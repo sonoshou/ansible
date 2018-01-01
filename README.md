@@ -13,3 +13,31 @@
 
 - nginxのインストール
 - システムアカウントにrbenvをインストール
+
+## ansibleの実行
+
+### 前提
+
+- CentOS 7.0系
+
+### ansibleのインストール
+
+```
+# yum install epel-release
+# yum install ansible``
+```
+
+### git clone
+
+```
+$ cd ~
+$ git clone https://github.com/sonoshou/ansible.git
+```
+
+### ansibleの実行
+
+```
+$ cd ~/ansible
+# ansible-playbook site.xml --check # dry-run
+# ansible-playbook site.xml
+```
