@@ -41,3 +41,11 @@ $ cd ~/ansible
 # ansible-playbook site.xml --check # dry-run
 # ansible-playbook site.xml
 ```
+
+### vagrant用の実行
+
+```
+$ cd ~/ansible
+# ansible-playbook vagrant.xml --check # dry-run
+# ansible-playbook vagrant.xml
+```
