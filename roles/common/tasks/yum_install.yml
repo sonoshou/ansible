@@ -3,6 +3,8 @@
   with_items:
     - tree
     - htop
+    - wget
+    - vim
   become: yes
   tags:
     - yum
