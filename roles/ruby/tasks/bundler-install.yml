@@ -1,0 +1,10 @@
+- name: bundlerのパスが通っているかを確認
+  shell: bash -lc "bundler version"
+  register: bundler_installed
+  changed_when: False
+  check_mode: no
+  ignore_errors: yes
+
+- name: bundlerのインストール
+  shell: bash -lc "gem install bundler"
+  when: "'Bundler version' not in bundler_installed.stdout"
