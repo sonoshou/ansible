@@ -1,8 +1,9 @@
 # 対象のサーバ群を記述
 
-- import_playbook: 99_vagrant.yml
+- import_playbook: 10_ruby-webserver.yml
+#- import_playbook: 20_dbserver.yml
 
 # Tips
 # 全ての起点となるファイル
-# sudo ansible-playbook vagrant.yml
+# sudo ansible-playbook 01_ruby-site.yml
 # 以上のコマンドでansibleを実行する。
