@@ -16,7 +16,7 @@
   roles:
     - webserver
 
-- name: システムユーザにrbenvをインストールする
+- name: システムユーザにrubyと周辺環境をインストールする
   hosts: localhost
   vars_files:
     - vars/main.yml
@@ -24,9 +24,9 @@
   become_user: "{{ production_system_user }}"
   connection: local
   roles:
-    - rbenv
+    - ruby
 
-- name: システムユーザにrbenvをインストールする
+- name: システムユーザにrubyと周辺環境をインストールする
   hosts: localhost
   vars_files:
     - vars/main.yml
@@ -34,4 +34,4 @@
   become_user: "{{ staging_system_user }}"
   connection: local
   roles:
-    - rbenv
+    - ruby
