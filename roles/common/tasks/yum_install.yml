@@ -5,6 +5,7 @@
     - htop
     - wget
     - vim
+    - lsof
   become: yes
   tags:
     - yum
