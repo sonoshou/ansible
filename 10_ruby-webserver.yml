@@ -14,7 +14,7 @@
   become: yes
   connection: local
   roles:
-    - webserver
+    - nginx
 
 - name: システムユーザにrubyと周辺環境をインストールする
   hosts: localhost
