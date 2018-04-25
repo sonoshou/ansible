@@ -1,0 +1,10 @@
+# 実行するプレイブックを指定。
+
+- name: サーバの共通項目を実行する
+  hosts: localhost
+  vars_files:
+    - vars/main.yml
+  become: yes
+  connection: local
+  roles:
+    - common

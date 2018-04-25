@@ -15,8 +15,6 @@
   changed_when: False
   register: executer
 
-- debug: msg={{executer}}
-
 - name: /tmp/php-build/が存在したら、所有者を変更
   file:
     path: /tmp/php-build/

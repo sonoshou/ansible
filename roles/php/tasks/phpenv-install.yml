@@ -2,6 +2,7 @@
   yum: name="{{ item }}" state=latest
   with_items:
     - gcc
+    - gcc-c++
     - libxml2-devel
     - libcurl-devel
     - libpng-devel
