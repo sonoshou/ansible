@@ -9,4 +9,4 @@
   register: ps_result
   changed_when: false
 - debug: var=ps_result.stdout_lines
-  when: ps_result | success
+  when: ps_result is success
