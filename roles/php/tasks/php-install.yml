@@ -23,6 +23,7 @@
     recurse: yes
   become: yes
   become_user: root
+  changed_when: False
   when: fm.stat.exists
 
 - name: phpenv install 

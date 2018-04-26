@@ -7,6 +7,15 @@
   roles:
     - httpd
 
+- name: システムユーザを作成する
+  hosts: localhost
+  vars_files:
+    - vars/main.yml
+  become: yes
+  connection: local
+  roles:
+    - sysuser
+
 - name: システムユーザにphpと周辺環境をインストールする
   hosts: localhost
   vars_files:
