@@ -24,7 +24,7 @@
   become_user: "{{ production_system_user }}"
   connection: local
   roles:
-    - ruby
+    - rbenv
 
 - name: システムユーザにrubyと周辺環境をインストールする
   hosts: localhost
@@ -34,4 +34,4 @@
   become_user: "{{ staging_system_user }}"
   connection: local
   roles:
-    - ruby
+    - rbenv
