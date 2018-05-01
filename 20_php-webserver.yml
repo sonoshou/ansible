@@ -16,22 +16,10 @@
   roles:
     - sysuser
 
-- name: システムユーザにphpと周辺環境をインストールする
+- name: サーバにphpと周辺環境をインストールする
   hosts: localhost
-  vars_files:
-    - vars/main.yml
   become: yes
-  become_user: "{{ production_system_user }}"
   connection: local
   roles:
     - php
 
-- name: システムユーザにphpと周辺環境をインストールする
-  hosts: localhost
-  vars_files:
-    - vars/main.yml
-  become: yes
-  become_user: "{{ staging_system_user }}"
-  connection: local
-  roles:
-    - php

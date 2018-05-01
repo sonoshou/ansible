@@ -1,0 +1,6 @@
+- name: conposerのインストール
+  yum: name=composer state=latest
+  become: yes
+  become_user: root
+  tags:
+    - yum

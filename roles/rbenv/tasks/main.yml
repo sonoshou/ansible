@@ -1,0 +1,3 @@
+- import_tasks: rbenv-install.yml
+- import_tasks: ruby-install.yml
+- import_tasks: bundler-install.yml

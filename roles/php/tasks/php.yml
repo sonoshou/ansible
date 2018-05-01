@@ -1,0 +1,26 @@
+- name: sclリポジトリのインストール
+  yum: name=centos-release-scl
+  become: yes
+  tags:
+    - yum
+
+- name: phpのインストール
+  yum: name="{{ item }}" state=latest
+  become: yes
+  with_items:
+    - rh-{{ php_version }}
+    - rh-{{ php_version }}-php-devel
+    - rh-{{ php_version }}-php-mbstring
+    - rh-{{ php_version }}-php-pdo
+    - rh-{{ php_version }}-php-gd
+    - rh-{{ php_version }}-php-xml
+    - rh-{{ php_version }}-php-mcrypt
+  tags:
+    - yum
+
+- name: 常時phpを有効にする。
+  become: yes
+  file:
+    src: /opt/rh/rh-{{ php_version }}/enable
+    dest: /etc/profile.d/rh-{{ php_version }}.sh
+    state: link
