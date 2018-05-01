@@ -1,8 +1,0 @@
-# 対象のサーバ群を記述
-
-- import_playbook: 99_vagrant.yml
-
-# Tips
-# 全ての起点となるファイル
-# sudo ansible-playbook vagrant.yml
-# 以上のコマンドでansibleを実行する。

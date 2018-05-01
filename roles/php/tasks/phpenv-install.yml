@@ -1,0 +1,72 @@
+- name: phpのbuildに関係するミドルウェアをインストール
+  yum: name="{{ item }}" state=latest
+  with_items:
+    - gcc
+    - gcc-c++
+    - libxml2-devel
+    - libcurl-devel
+    - libpng-devel
+    - libmcrypt-devel
+    - libtidy-devel
+    - libxslt-devel
+    - openssl-devel
+    - bison
+    - libjpeg-turbo-devel
+    - readline-devel
+    - autoconf
+    - bzip2-devel
+    - libicu-devel
+    - re2c
+    - git
+  become_user: root
+  tags: 
+    - yum
+
+
+# - name: installのシェルを実行
+#   shell: cd ; bash -lc ". ~/.phpenv/bin/phpenv-install.sh"
+
+- name: phpenvのパスが通っているかを確認
+  shell: cd; bash -lc "phpenv versions"
+  register: phpenv_installed
+  changed_when: False
+  check_mode: no
+  ignore_errors: yes
+
+- name: curl -L https://raw.github.com/CHH/phpenv/master/bin/phpenv-install.sh | bash
+  shell: cd; bash -lc "curl -L https://raw.github.com/CHH/phpenv/master/bin/phpenv-install.sh | bash"
+  when: php_version not in phpenv_installed.stdout
+
+- name: git clone https://github.com/CHH/php-build.git ~/.phpenv/plugins/php-build
+  git:
+    repo: 'https://github.com/CHH/php-build.git'
+    dest: ~/.phpenv/plugins/php-build
+    version: master
+    update: yes
+  tags:
+    - git
+  when: php_version not in phpenv_installed.stdout
+
+- name: .bash_profileにパスを追加
+  lineinfile: >
+    dest="~/.bash_profile"
+    line='export PATH=$HOME/.phpenv/bin:$PATH'
+  when: php_version not in phpenv_installed.stdout
+
+- name: .bash_profileにphpenv initを追加
+  lineinfile: >
+    dest="~/.bash_profile"
+    line='eval "$(phpenv init -)"'
+  when: php_version not in phpenv_installed.stdout
+
+# Tips
+# 0.shellなどの実行結果をregisterで記録する。
+#   ruby_versionは、vars/main.ymlに記載されている。
+#
+# 1.コマンド実行結果に特定文字列が入っていなければ処理する（入っている場合はskipする）
+# when: "'評価したい文字列' not in command1_result.stdout"
+# when: command1_result.stdout.find('評価したい文字列') == -1同様
+#
+# 2.コマンド実行結果に特定文字列が入っていなければ処理をfailedさせる（入っていない場合はskipする）
+# faild_when: "'評価したい文字列' not in command2_result.stdout"
+# faild_when: command2_result.stdout.find('評価したい文字列') == -1

@@ -1,5 +1,15 @@
 # 実行するプレイブックを指定。
 
+- name: vagrantユーザにphpenvをインストールする
+  hosts: localhost
+  vars_files:
+    - vars/vagrant.yml
+  become: yes
+  become_user: "{{ user_name }}"
+  connection: local
+  roles:
+    - php
+
 - name: vagrantユーザにrbenvをインストールする
   hosts: localhost
   vars_files:

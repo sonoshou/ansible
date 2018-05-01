@@ -1,0 +1,42 @@
+- name: phpのバージョンを確認する
+  shell: cd; bash -lc "phpenv versions"
+  register: phpenv_installed
+  check_mode: no
+  changed_when: False
+  ignore_errors: yes
+
+- name: /tmp/php-build/が存在するか確認
+  stat:
+    path: /tmp/php-build/
+  register: fm
+
+- name: 実行者を変数に格納
+  shell: cd; bash -lc "whoami"
+  changed_when: False
+  register: executer
+
+- name: /tmp/php-build/が存在したら、所有者を変更
+  file:
+    path: /tmp/php-build/
+    owner: "{{executer.stdout}}"
+    group: "{{executer.stdout}}"
+    recurse: yes
+  become: yes
+  become_user: root
+  changed_when: False
+  when: fm.stat.exists
+
+- name: phpenv install 
+  shell: cd; bash -lc "phpenv install '{{ php_version }}'"
+  when: php_version not in phpenv_installed.stdout
+
+- name: phpのバージョンを確認する
+  shell: cd; bash -lc "php --version"
+  register: php_installed
+  check_mode: no
+  changed_when: False
+  ignore_errors: yes
+
+- name: phpenv rehash & phpenv global
+  shell: cd; bash -lc "phpenv rehash && phpenv global '{{ php_version }}'"
+  when: php_version not in php_installed.stdout

@@ -3,7 +3,7 @@
   tags:
     - yum
 - name: Nginx起動
-  service: name=nginx state=started enabled=yes
+  systemd: name=nginx state=started enabled=yes
 - name: Nginxの起動確認
   shell: ps aux | grep nginx
   register: ps_result
