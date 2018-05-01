@@ -1,0 +1,23 @@
+- name: sclリポジトリのインストール
+  yum: name=centos-release-scl
+  become: yes
+  tags:
+    - yum
+
+- name: rubyのインストール
+  yum: name="{{ item }}" state=latest
+  become: yes
+  with_items:
+    - rh-{{ ruby_version }}
+    - rh-{{ ruby_version }}-ruby-devel
+    - rh-{{ ruby_version }}-rubygem-rake
+    - rh-{{ ruby_version }}-rubygem-bundler
+  tags:
+    - yum
+
+- name: 常時rubyを有効にする。
+  become: yes
+  file:
+    src: /opt/rh/rh-{{ ruby_version }}/enable
+    dest: /etc/profile.d/rh-{{ ruby_version }}.sh
+    state: link
