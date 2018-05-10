@@ -9,6 +9,7 @@
   become: yes
   with_items:
     - rh-{{ php_version }}
+    - rh-{{ php_version }}-php
     - rh-{{ php_version }}-php-devel
     - rh-{{ php_version }}-php-mbstring
     - rh-{{ php_version }}-php-pdo

@@ -1,11 +1,11 @@
 - name: Httpdインストール
-  yum: name=httpd state=latest
+  yum: name={{ httpd_version }}-httpd state=latest
   tags:
     - yum
 - name: Httpd起動
-  systemd: name=httpd state=started enabled=yes
+  systemd: name={{ httpd_version }}-httpd state=started enabled=yes
 - name: Httpdの起動確認
-  shell: ps aux | grep httpd
+  shell: ps aux | grep {{ httpd_version }}-httpd
   register: ps_result
   changed_when: false
 - debug: var=ps_result.stdout_lines
