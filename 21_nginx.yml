@@ -1,0 +1,9 @@
+# 実行するプレイブックを指定
+
+- name: webserverのミドルウェアをインストールする
+  hosts: localhost
+  become: yes
+  connection: local
+  roles:
+    - nginx
+

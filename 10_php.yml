@@ -1,12 +1,5 @@
 # 実行するプレイブックを指定。
 
-- name: webserverのミドルウェアをインストールする
-  hosts: localhost
-  become: yes
-  connection: local
-  roles:
-    - nginx
-
 - name: システムユーザを作成する
   hosts: localhost
   vars_files:
@@ -16,9 +9,10 @@
   roles:
     - sysuser
 
-- name: サーバにrubyと周辺環境をインストールする
+- name: サーバにphpと周辺環境をインストールする
   hosts: localhost
   become: yes
   connection: local
   roles:
-    - ruby
+    - php
+
