@@ -1,0 +1,17 @@
+# 実行するプレイブックを指定。
+
+- name: システムユーザを作成する
+  hosts: localhost
+  vars_files:
+    - vars/main.yml
+  become: yes
+  connection: local
+  roles:
+    - sysuser
+
+- name: サーバにpythonと周辺環境をインストールする
+  hosts: localhost
+  become: yes
+  connection: local
+  roles:
+    - python

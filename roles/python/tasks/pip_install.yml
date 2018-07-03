@@ -1,0 +1,22 @@
+- name: pipでインストール
+  pip: name={{ item }} state=present
+  with_items:
+    - sklearn
+    - jupyter
+    - ipykernel
+    - scipy
+    - simpy
+    - matplotlib
+    - numpy
+    - pandas
+    - plotly
+    - pydot
+    - graphviz
+    - sympy
+    - mecab-python3
+    - librosa
+    - Pillow
+    - h5py
+    - google-api-python-client
+    - jupyter-tensorboard
+    - gensim

@@ -1,0 +1,11 @@
+# 対象のサーバ群を記述
+
+- import_playbook: 90_common.yml
+- import_playbook: 12_python.yml
+#- import_playbook: 20_apache.yml
+#- import_playbook: 21_nginx.yml
+
+# Tips
+# 全ての起点となるファイル
+# sudo ansible-playbook 01_ruby-site.yml
+# 以上のコマンドでansibleを実行する。

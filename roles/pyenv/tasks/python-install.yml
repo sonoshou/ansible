@@ -1,0 +1,21 @@
+- name: pythonのバージョンを確認する
+  shell: cd; bash -lc "pyenv versions"
+  register: pyenv_installed
+  check_mode: no
+  changed_when: False
+  ignore_errors: yes
+
+- name: pyenv install 
+  shell: cd; bash -lc "pyenv install '{{ python_version }}'"
+  when: python_version not in pyenv_installed.stdout
+
+- name: pythonのバージョンを確認する
+  shell: cd; bash -lc "python --version"
+  register: python_installed
+  check_mode: no
+  changed_when: False
+  ignore_errors: yes
+
+- name: pyenv rehash & pyenv global
+  shell: cd; bash -lc "pyenv rehash && pyenv global '{{ python_version }}'"
+  when: python_version not in python_installed.stdout

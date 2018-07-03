@@ -19,3 +19,13 @@
   connection: local
   roles:
     - rbenv
+
+- name: vagrantユーザにpyenvをインストールする
+  hosts: localhost
+  vars_files:
+    - vars/vagrant.yml
+  become: yes
+  become_user: "{{ user_name }}"
+  connection: local
+  roles:
+    - pyenv

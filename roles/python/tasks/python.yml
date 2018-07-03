@@ -1,0 +1,20 @@
+- name: sclリポジトリのインストール
+  yum: name=centos-release-scl
+  become: yes
+  tags:
+    - yum
+
+- name: pythonのインストール
+  yum: name="{{ item }}" state=latest
+  become: yes
+  with_items:
+    - rh-{{ python_version }}
+  tags:
+    - yum
+
+- name: 常時pythonを有効にする。
+  become: yes
+  file:
+    src: /opt/rh/rh-{{ python_version }}/enable
+    dest: /etc/profile.d/rh-{{ python_version }}.sh
+    state: link

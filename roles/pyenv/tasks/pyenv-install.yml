@@ -1,0 +1,45 @@
+- name: git clone https://github.com/yyuu/pyenvgit ~/.pyenv
+  git:
+    repo: 'https://github.com/yyuu/pyenv.git'
+    dest: ~/.pyenv
+    version: master
+    update: yes
+  tags:
+    - git
+
+- name: pyenvのパスが通っているかを確認
+  shell: cd; bash -lc "pyenv versions"
+  register: pyenv_installed
+  changed_when: False
+  check_mode: no
+  ignore_errors: yes
+
+- name: .bash_profileにパスを追加
+  lineinfile: >
+    dest="~/.bash_profile"
+    line='export PYENV_ROOT=$HOME/.pyenv'
+  when: python_version not in pyenv_installed.stdout
+
+- name: .bash_profileにパスを追加
+  lineinfile: >
+    dest="~/.bash_profile"
+    line='export PATH=$PYENV_ROOT/bin:$PATH'
+  when: python_version not in pyenv_installed.stdout
+
+- name: .bash_prifileにrbenv initを追加
+  lineinfile: >
+    dest="~/.bash_profile"
+    line='eval "$(pyenv init -)"'
+  when: python_version not in pyenv_installed.stdout
+
+# Tips
+# 0.shellなどの実行結果をregisterで記録する。
+#   python_versionは、vars/main.ymlに記載されている。
+#
+# 1.コマンド実行結果に特定文字列が入っていなければ処理する（入っている場合はskipする）
+# when: "'評価したい文字列' not in command1_result.stdout"
+# when: command1_result.stdout.find('評価したい文字列') == -1同様
+#
+# 2.コマンド実行結果に特定文字列が入っていなければ処理をfailedさせる（入っていない場合はskipする）
+# faild_when: "'評価したい文字列' not in command2_result.stdout"
+# faild_when: command2_result.stdout.find('評価したい文字列') == -1
