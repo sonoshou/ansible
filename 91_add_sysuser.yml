@@ -3,7 +3,7 @@
 - name: システムユーザを作成する
   hosts: localhost
   vars_files:
-    - vars/main.yml
+    - vars/sys-user-name.yml
   become: yes
   connection: local
   roles:
