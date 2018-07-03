@@ -3,8 +3,8 @@
 - name: サーバの共通項目を実行する
   hosts: localhost
   become: yes
-  vars_files:
-    - vars/ansible-python-path.yml
+#  vars_files:
+#    - vars/ansible-python-path.yml
   connection: local
   roles:
     - common
