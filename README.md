@@ -30,7 +30,7 @@
 Amazon Linuxの場合
 
 ```
-# sudo yum --enablerepo=epel install ansible
+# yum --enablerepo=epel install ansible
 ```
 
 ### git clone
