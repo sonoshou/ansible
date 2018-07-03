@@ -27,6 +27,12 @@
 # yum install ansible
 ```
 
+Amazon Linuxの場合
+
+```
+# sudo yum --enablerepo=epel install ansible
+```
+
 ### git clone
 
 ```
@@ -48,4 +54,18 @@ $ cd ~/ansible
 $ cd ~/ansible
 # ansible-playbook vagrant.xml --check # dry-run
 # ansible-playbook vagrant.xml
+```
+
+## エラーの対応
+
+### 1. ansibleで使用するpythoの指定 
+
+```
+If you require Python 3 support use the `dnf` Ansible module instead.
+```
+
+この場合は以下の `vars` を読み込む。
+
+```
+vars/ansible-python-path.yml
 ```
