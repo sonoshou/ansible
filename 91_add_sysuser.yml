@@ -1,8 +1,11 @@
 # 実行するプレイブックを指定。
 
-- name: サーバにrubyと周辺環境をインストールする
+- name: システムユーザを作成する
   hosts: localhost
+  vars_files:
+    - vars/main.yml
   become: yes
   connection: local
   roles:
-    - ruby
+    - sysuser
+
