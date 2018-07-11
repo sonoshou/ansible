@@ -29,3 +29,13 @@
   connection: local
   roles:
     - pyenv
+
+- name: vagrantユーザにnode.js & yarnをインストールする
+  hosts: localhost
+  vars_files:
+    - vars/vagrant.yml
+  become: yes
+  become_user: "{{ user_name }}"
+  connection: local
+  roles:
+    - nodejs

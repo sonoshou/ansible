@@ -22,10 +22,6 @@
   tags: 
     - yum
 
-
-# - name: installのシェルを実行
-#   shell: cd ; bash -lc ". ~/.phpenv/bin/phpenv-install.sh"
-
 - name: phpenvのパスが通っているかを確認
   shell: cd; bash -lc "phpenv versions"
   register: phpenv_installed

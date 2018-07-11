@@ -1,0 +1,19 @@
+- name: nodejsのパスが通っているかを確認
+  shell: cd; bash -lc "node -v"
+  register: nodejs_installed
+  changed_when: False
+  check_mode: no
+  ignore_errors: yes
+
+- name: curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+  shell: cd; bash -lc "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash"
+  when: nodejs_version not in nodejs_installed.stdout
+
+- name: .bash_profileにpathを追加
+  blockinfile:
+    dest: "~/.bash_profile"
+    block: |
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+  when: nodejs_version not in nodejs_installed.stdout
+
