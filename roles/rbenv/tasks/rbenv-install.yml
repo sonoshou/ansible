@@ -38,15 +38,11 @@
   ignore_errors: yes
 
 - name: .bash_profileにパスを追加
-  lineinfile: >
-    dest="~/.bash_profile"
-    line='export PATH=$HOME/.rbenv/bin:$PATH'
-  when: ruby_version not in rbenv_installed.stdout
-
-- name: .bash_prifileにrbenv initを追加
-  lineinfile: >
-    dest="~/.bash_profile"
-    line='eval "$(rbenv init -)"'
+  blockinfile:
+    dest: "~/.bash_profile"
+    block: |
+      export PATH=$HOME/.rbenv/bin:$PATH
+      eval "$(rbenv init -)"
   when: ruby_version not in rbenv_installed.stdout
 
 # Tips

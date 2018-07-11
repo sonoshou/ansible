@@ -44,15 +44,11 @@
   when: php_version not in phpenv_installed.stdout
 
 - name: .bash_profileにパスを追加
-  lineinfile: >
-    dest="~/.bash_profile"
-    line='export PATH=$HOME/.phpenv/bin:$PATH'
-  when: php_version not in phpenv_installed.stdout
-
-- name: .bash_profileにphpenv initを追加
-  lineinfile: >
-    dest="~/.bash_profile"
-    line='eval "$(phpenv init -)"'
+  blockinfile:
+    dest: "~/.bash_profile"
+    block: |
+      export PATH=$HOME/.phpenv/bin:$PATH
+      eval "$(phpenv init -)"
   when: php_version not in phpenv_installed.stdout
 
 # Tips
