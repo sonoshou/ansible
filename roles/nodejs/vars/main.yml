@@ -1,3 +1,1 @@
-nodejs_install_version: --lts
-nodejs_version: v8.11.3
-yarn_version: 1.7.0
+nodejs_version: rh-nodejs8

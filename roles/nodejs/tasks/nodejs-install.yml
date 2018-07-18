@@ -1,14 +1,18 @@
-- name: nodejsのパスが通っているかを確認
-  shell: cd; bash -lc "node -v"
-  register: nodejs_installed
-  changed_when: False
-  check_mode: no
-  ignore_errors: yes
+- name: sclリポジトリのインストール
+  yum: name=centos-release-scl
+  become: yes
+  tags:
+    - yum
 
-- name: nvm install 
-  shell: cd; bash -lc "nvm install '{{ nodejs_install_version }}'"
-  when: nodejs_version not in nodejs_installed.stdout
+- name: nodejsのインストール
+  yum: name="{{ nodejs_version }}" state=latest
+  become: yes
+  tags:
+    - yum
 
-- name: nvm use
-  shell: cd; bash -lc "nvm use '{{ nodejs_install_version }}'"
-  when: nodejs_version not in nodejs_installed.stdout
+- name: 常時phpを有効にする。
+  become: yes
+  file:
+    src: /opt/rh/rh-{{ nodejs_version }}/enable
+    dest: /etc/profile.d/rh-{{ nodejs_version }}.sh
+    state: link

@@ -1,0 +1,8 @@
+# 実行するプレイブックを指定。
+
+- name: サーバにnodejsと周辺環境をインストールする
+  hosts: localhost
+  become: yes
+  connection: local
+  roles:
+    - nodejs

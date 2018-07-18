@@ -1,0 +1,14 @@
+- name: nodejsのパスが通っているかを確認
+  shell: cd; bash -lc "node -v"
+  register: nodejs_installed
+  changed_when: False
+  check_mode: no
+  ignore_errors: yes
+
+- name: nvm install 
+  shell: cd; bash -lc "nvm install '{{ nodejs_install_version }}'"
+  when: nodejs_version not in nodejs_installed.stdout
+
+- name: nvm use
+  shell: cd; bash -lc "nvm use '{{ nodejs_install_version }}'"
+  when: nodejs_version not in nodejs_installed.stdout

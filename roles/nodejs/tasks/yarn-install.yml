@@ -1,10 +1,10 @@
-- name: yarnのパスが通っているかを確認
+- name: yarnのインストール
   shell: cd; bash -lc "yarn -v"
   register: yarn_installed
   changed_when: False
   check_mode: no
   ignore_errors: yes
 
-- name: curl -o- -L https://yarnpkg.com/install.sh | bash
-  shell: cd; bash -lc "curl -o- -L https://yarnpkg.com/install.sh | bash"
+- name: npm install -g yarn
+  shell: cd; bash -lc "npm install -g yarn"
   when: yarn_version not in yarn_installed.stdout
