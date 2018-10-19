@@ -1,0 +1,21 @@
+- name: goのバージョンを確認する
+  shell: cd; bash -lc "goenv versions"
+  register: goenv_installed
+  check_mode: no
+  changed_when: False
+  ignore_errors: yes
+
+- name: goenv install 
+  shell: cd; bash -lc "goenv install '{{ go_version }}'"
+  when: go_version not in goenv_installed.stdout
+
+- name: goのバージョンを確認する
+  shell: cd; bash -lc "go --version"
+  register: go_installed
+  check_mode: no
+  changed_when: False
+  ignore_errors: yes
+
+- name: goenv rehash & goenv global
+  shell: cd; bash -lc "goenv rehash && goenv global '{{ go_version }}'"
+  when: go_version not in go_installed.stdout

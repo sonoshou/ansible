@@ -39,3 +39,13 @@
   connection: local
   roles:
     - nvm
+
+- name: vagrantユーザにgoをインストールする
+  hosts: localhost
+  vars_files:
+    - vars/vagrant.yml
+  become: yes
+  become_user: "{{ user_name }}"
+  connection: local
+  roles:
+    - goenv

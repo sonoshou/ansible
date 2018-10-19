@@ -1,0 +1,35 @@
+- name: git clone https://github.com/syndbg/goenv.git ~/.goenv
+  git:
+    repo: 'https://github.com/syndbg/goenv.git'
+    dest: ~/.goenv
+    version: master
+    update: yes
+  tags:
+    - git
+
+- name: goenvのパスが通っているかを確認
+  shell: cd; bash -lc "goenv versions"
+  register: goenv_installed
+  changed_when: False
+  check_mode: no
+  ignore_errors: yes
+
+- name: .bash_profileにパスを追加
+  blockinfile:
+    dest: "~/.bash_profile"
+    block: |
+      export PATH=$HOME/.goenv/bin:$PATH
+      eval "$(goenv init -)"
+  when: go_version not in goenv_installed.stdout
+
+# Tips
+# 0.shellなどの実行結果をregisterで記録する。
+#   ruby_versionは、vars/main.ymlに記載されている。
+#
+# 1.コマンド実行結果に特定文字列が入っていなければ処理する（入っている場合はskipする）
+# when: "'評価したい文字列' not in command1_result.stdout"
+# when: command1_result.stdout.find('評価したい文字列') == -1同様
+#
+# 2.コマンド実行結果に特定文字列が入っていなければ処理をfailedさせる（入っていない場合はskipする）
+# faild_when: "'評価したい文字列' not in command2_result.stdout"
+# faild_when: command2_result.stdout.find('評価したい文字列') == -1
