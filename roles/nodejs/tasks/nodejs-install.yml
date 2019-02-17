@@ -10,7 +10,7 @@
   tags:
     - yum
 
-- name: 常時phpを有効にする。
+- name: 常時nodejsを有効にする。
   become: yes
   file:
     src: /opt/rh/rh-{{ nodejs_version }}/enable
