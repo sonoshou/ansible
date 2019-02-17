@@ -1,0 +1,22 @@
+# docker-composeの最新バージョンは以下のURLから確認すること。
+# https://github.com/docker/compose/tags
+#
+# アンインストールは、
+# /usr/local/bin/docker-compose を削除するだけ。
+
+- name: docker composeのバージョンを確認する
+  shell: cd; bash -lc "'{{ installed_path }}'/docker-compose --version"
+  register: docker_compose_installed
+  check_mode: no
+  changed_when: False
+  become: yes
+  become_user: "{{ user_name }}"
+  ignore_errors: yes
+
+- name: docker composeをインストール
+  shell: bash -lc "curl -L https://github.com/docker/compose/releases/download/'{{ docker_compose_version }}'/docker-compose-`uname -s`-`uname -m` > '{{ installed_path }}'/docker-compose"
+  when: docker_compose_version not in docker_compose_installed.stdout
+
+- name: docker composeの実行権限を追加
+  file: path=/usr/local/bin/docker-compose mode=755
+  when: docker_compose_version not in docker_compose_installed.stdout

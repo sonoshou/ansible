@@ -1,0 +1,29 @@
+- name: dockerのバージョンを確認する
+  shell: cd; bash -lc "docker version"
+  register: docker_installed
+  check_mode: no
+  changed_when: False
+  ignore_errors: yes
+
+- name: install docker rpm
+  yum: name=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=latest
+  when: '"Version" not in docker_installed.stdout'
+
+- name: add docker rpm repository
+  copy:
+    dest: /etc/yum.repos.d/docker.repo
+    content: |
+      [dockerrepo]
+      name=Docker Repository
+      baseurl=https://yum.dockerproject.org/repo/main/centos/7/
+      enabled=1
+      gpgcheck=1
+      gpgkey=https://yum.dockerproject.org/gpg
+  when: '"Version" not in docker_installed.stdout'
+
+- name: install docker
+  yum: name=docker-engine state=latest
+  when: '"Version" not in docker_installed.stdout'
+
+- name: docker起動
+  systemd: name=docker state=started enabled=yes

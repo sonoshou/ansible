@@ -49,3 +49,13 @@
   connection: local
   roles:
     - goenv
+
+- name: vagrantユーザにdockerとdocker-composeをインストールする
+  hosts: localhost
+  vars_files:
+    - vars/vagrant.yml
+  become: yes
+  become_user: root
+  connection: local
+  roles:
+    - docker
