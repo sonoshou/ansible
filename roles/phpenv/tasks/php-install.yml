@@ -9,11 +9,13 @@
   stat:
     path: /tmp/php-build/
   register: fm
+  when: php_version not in phpenv_installed.stdout
 
 - name: 実行者を変数に格納
   shell: cd; bash -lc "whoami"
   changed_when: False
   register: executer
+  when: php_version not in phpenv_installed.stdout
 
 - name: /tmp/php-build/が存在したら、所有者を変更
   file:
@@ -24,7 +26,9 @@
   become: yes
   become_user: root
   changed_when: False
-  when: fm.stat.exists
+  when:
+    - php_version not in phpenv_installed.stdout
+    - fm.stat.exists
 
 - name: phpenv install 
   shell: cd; bash -lc "phpenv install '{{ php_version }}'"

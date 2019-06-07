@@ -1,11 +1,12 @@
 - name: 共通項目をインストール。
-  yum: name="{{ item }}" state=latest
-  with_items:
-    - tree
-    - htop
-    - wget
-    - vim
-    - lsof
+  yum:
+    name:
+      - tree
+      - htop
+      - wget
+      - vim
+      - lsof
+    state: latest
   become: yes
   tags:
     - yum

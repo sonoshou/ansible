@@ -1,13 +1,14 @@
 - name: rubyのbuildに関係するミドルウェアをインストール
-  yum: name="{{ item }}" state=latest
-  with_items:
-    - gcc
-    - bzip2
-    - openssl-devel
-    - libyaml-devel
-    - readline-devel
-    - zlib-devel
-    - git
+  yum:
+    name:
+      - gcc
+      - bzip2
+      - openssl-devel
+      - libyaml-devel
+      - readline-devel
+      - zlib-devel
+      - git
+    state: latest
   become_user: root
   tags: 
     - yum

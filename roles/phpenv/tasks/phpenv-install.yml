@@ -1,23 +1,24 @@
 - name: phpのbuildに関係するミドルウェアをインストール
-  yum: name="{{ item }}" state=latest
-  with_items:
-    - gcc
-    - gcc-c++
-    - libxml2-devel
-    - libcurl-devel
-    - libpng-devel
-    - libmcrypt-devel
-    - libtidy-devel
-    - libxslt-devel
-    - openssl-devel
-    - bison
-    - libjpeg-turbo-devel
-    - readline-devel
-    - autoconf
-    - bzip2-devel
-    - libicu-devel
-    - re2c
-    - git
+  yum:
+    name:
+      - gcc
+      - gcc-c++
+      - libxml2-devel
+      - libcurl-devel
+      - libpng-devel
+      - libmcrypt-devel
+      - libtidy-devel
+      - libxslt-devel
+      - openssl-devel
+      - bison
+      - libjpeg-turbo-devel
+      - readline-devel
+      - autoconf
+      - bzip2-devel
+      - libicu-devel
+      - re2c
+      - git
+    state: latest
   become_user: root
   tags: 
     - yum
