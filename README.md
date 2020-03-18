@@ -30,6 +30,7 @@
 Amazon Linuxの場合
 
 ```
+# amazon-linux-extras install epel
 # yum --enablerepo=epel install ansible
 ```
 
@@ -48,12 +49,27 @@ $ cd ~/ansible
 # ansible-playbook site.xml
 ```
 
+### サーバ用の実行
+
+- ユーザ名を変更
+  - インストール先のユーザ名に変更する
+
+```
+$ vim ~/ansible/vars/standard.xml
+```
+
+```
+$ cd ~/ansible
+# ansible-playbook 00_standard.xml --check # dry-run
+# ansible-playbook 00_standard.xml
+```
+
 ### vagrant用の実行
 
 ```
 $ cd ~/ansible
-# ansible-playbook vagrant.xml --check # dry-run
-# ansible-playbook vagrant.xml
+# ansible-playbook 00_vagrant.xml --check # dry-run
+# ansible-playbook 00_vagrant.xml
 ```
 
 ## エラーの対応

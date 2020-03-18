@@ -1,0 +1,41 @@
+# 実行するプレイブックを指定。
+
+- name: standardユーザにrbenvをインストールする
+  hosts: localhost
+  vars_files:
+    - vars/standard.yml
+  become: yes
+  become_user: "{{ user_name }}"
+  connection: local
+  roles:
+    - rbenv
+
+- name: standardユーザにpyenvをインストールする
+  hosts: localhost
+  vars_files:
+    - vars/standard.yml
+  become: yes
+  become_user: "{{ user_name }}"
+  connection: local
+  roles:
+    - pyenv
+
+- name: standardユーザにnode.js & yarnをインストールする
+  hosts: localhost
+  vars_files:
+    - vars/standard.yml
+  become: yes
+  become_user: "{{ user_name }}"
+  connection: local
+  roles:
+    - nvm
+
+- name: standardユーザにgoをインストールする
+  hosts: localhost
+  vars_files:
+    - vars/standard.yml
+  become: yes
+  become_user: "{{ user_name }}"
+  connection: local
+  roles:
+    - goenv
